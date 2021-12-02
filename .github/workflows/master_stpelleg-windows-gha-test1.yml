@@ -13,7 +13,10 @@ jobs:
     runs-on: windows-latest
     steps:
     # Check out the repository so your workflow can access it
-    - uses: actions/checkout@v1
+    - uses: actions/checkout@v2
+    
+    - name: Set up Docker Buildx
+      uses: docker/setup-buildx-action@v1
 
     # Use docker login
     - name: Docker login
@@ -27,8 +30,8 @@ jobs:
     # Build and push your image
     - name: Build and Push container
       run: |
-        docker build -t https://index.docker.io/v1/windows:${{ github.sha }} taskapp/taskapp/
-        docker push https://index.docker.io/v1/windows:${{ github.sha }}  
+        docker build -t index.docker.io/${{ secrets.AzureAppService_ContainerUsername_02e0708123454ffba322035de9c57630 }}/windows:${{ github.sha }} taskapp/taskapp/
+        docker push index.docker.io/${{ secrets.AzureAppService_ContainerUsername_02e0708123454ffba322035de9c57630 }}/windows:${{ github.sha }}  
 
     - name: Deploy to Azure Web App
       id: deploy-to-webapp
