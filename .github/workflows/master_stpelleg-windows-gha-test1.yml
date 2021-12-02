@@ -30,7 +30,7 @@ jobs:
     # Build and push your image
     - name: Build and Push container
       run: |
-        docker build -t index.docker.io/${{ secrets.AzureAppService_ContainerUsername_02e0708123454ffba322035de9c57630 }}/windows:${{ github.sha }} taskapp/taskapp/
+        docker build -t index.docker.io/${{ secrets.AzureAppService_ContainerUsername_02e0708123454ffba322035de9c57630 }}/windows:${{ github.sha }}
         docker push index.docker.io/${{ secrets.AzureAppService_ContainerUsername_02e0708123454ffba322035de9c57630 }}/windows:${{ github.sha }}  
 
     - name: Deploy to Azure Web App
