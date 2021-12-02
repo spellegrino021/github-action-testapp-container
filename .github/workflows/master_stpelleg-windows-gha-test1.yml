@@ -35,4 +35,4 @@ jobs:
         app-name: 'stpelleg-windows-gha-test1'
         slot-name: 'production'
         publish-profile: ${{ secrets.AzureAppService_PublishProfile_3ada135f14214ba884a51e57b87d23bb }}
-        images: 'index.docker.io/${{ secrets.AzureAppService_ContainerUsername_92b317630f0e49c390eef39faa2d768b }}/windows:${{ github.sha }}'
+        images: '${{ secrets.AzureAppService_ContainerUsername_92b317630f0e49c390eef39faa2d768b }}/windows:${{ github.sha }}'
