@@ -1,41 +1,40 @@
 name: Build and Deploy Windows Container App to Azure App Service - stpelleg-windows-gha-test1
 
   # Trigger the build on commits into the master branch
-  on:
-    push:
-      branches:
-        - master
+on:
+  push:
+    branches:
+      - master
+  workflow_dispatch:
   
-  # Starts jobs and sets the type of runner (Windows) they will run on.
-  jobs:
-    build-and-deploy-to-azure:
-      runs-on: windows-latest
-      
-      steps:
-        
-      # Check out the repository so your workflow can access it
-      - uses: actions/checkout@v1
-                       
-      # Use docker login
-      - name: Docker login
-        uses: azure/docker-login@v1
-        with:
-          login-server: https://index.docker.io/v1/
-          username: ${{ secrets.AzureAppService_ContainerUsername_92b317630f0e49c390eef39faa2d768b }}
-          password: ${{ secrets.AzureAppService_ContainerPassword_9109b7f1d9ef45dfbb6ac0a9ad6340fc }}
-          
-          
-      # Build and push your image
-      - name: Build and Push container
-        run: |
-          docker build -t https://index.docker.io/v1/windows:${{ github.sha }} taskapp/taskapp/
-          docker push https://index.docker.io/v1/windows:${{ github.sha }}  
-          
-      - name: Deploy to Azure Web App
-        id: deploy-to-webapp
-        uses: azure/webapps-deploy@v2
-        with:
-          app-name: 'stpelleg-windows-gha-test1'
-          slot-name: 'production'
-          publish-profile: ${{ secrets.AzureAppService_PublishProfile_3ada135f14214ba884a51e57b87d23bb }}
-          images: 'index.docker.io/${{ secrets.AzureAppService_ContainerUsername_92b317630f0e49c390eef39faa2d768b }}/windows:${{ github.sha }}'
+# Starts jobs and sets the type of runner (Windows) they will run on.
+jobs:
+  build-and-deploy-to-azure:
+    runs-on: windows-latest
+    steps:
+    # Check out the repository so your workflow can access it
+    - uses: actions/checkout@v1
+
+    # Use docker login
+    - name: Docker login
+      uses: azure/docker-login@v1
+      with:
+        login-server: https://index.docker.io/v1/
+        username: ${{ secrets.AzureAppService_ContainerUsername_92b317630f0e49c390eef39faa2d768b }}
+        password: ${{ secrets.AzureAppService_ContainerPassword_9109b7f1d9ef45dfbb6ac0a9ad6340fc }}
+
+
+    # Build and push your image
+    - name: Build and Push container
+      run: |
+        docker build -t https://index.docker.io/v1/windows:${{ github.sha }} taskapp/taskapp/
+        docker push https://index.docker.io/v1/windows:${{ github.sha }}  
+
+    - name: Deploy to Azure Web App
+      id: deploy-to-webapp
+      uses: azure/webapps-deploy@v2
+      with:
+        app-name: 'stpelleg-windows-gha-test1'
+        slot-name: 'production'
+        publish-profile: ${{ secrets.AzureAppService_PublishProfile_3ada135f14214ba884a51e57b87d23bb }}
+        images: 'index.docker.io/${{ secrets.AzureAppService_ContainerUsername_92b317630f0e49c390eef39faa2d768b }}/windows:${{ github.sha }}'
