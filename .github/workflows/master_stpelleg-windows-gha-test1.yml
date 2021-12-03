@@ -22,7 +22,7 @@
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v1
         with:
-          image: spellegrino/windows:${{ github.sha }}
+          image: spellegrino021/windows:${{ github.sha }}
           platforms: all
         
       - name: Available platforms
