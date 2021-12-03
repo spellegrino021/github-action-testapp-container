@@ -21,6 +21,9 @@
         
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v1
+        with:
+          image: spellegrino/windows:${{ github.sha }}
+          platforms: al
         
       - name: Available platforms
         run: echo ${{ steps.buildx.outputs.platforms }}
