@@ -24,9 +24,7 @@
     
       - name: Build and Push container to Docker Hub
         run: |
-          #docker build -t ${{ secrets.AzureAppService_ContainerUsername_197b8627a7384d6e872eca6376bada02 }}/windows:${{ github.sha }} .
           docker build ${{ secrets.AzureAppService_ContainerUsername_197b8627a7384d6e872eca6376bada02 }}/windows:VERSION1 .
-          #docker push ${{ secrets.AzureAppService_ContainerUsername_197b8627a7384d6e872eca6376bada02 }}/windows:${{ github.sha }} .
           docker push ${{ secrets.AzureAppService_ContainerUsername_197b8627a7384d6e872eca6376bada02 }}/windows:VERSION1 .
 
     deploy:
